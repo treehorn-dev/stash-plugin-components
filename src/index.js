@@ -34,6 +34,11 @@ export {
   toggleSelectedId,
 } from "./selection-surface-model.js";
 export {
+  filterRankedItems,
+  paginateRankedItems,
+  resolveRankedItems,
+} from "./ranked-collection-model.js";
+export {
   renderSelectableGrid,
   renderSelectableTable,
   renderSelectionToolbar,
