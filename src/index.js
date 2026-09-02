@@ -15,6 +15,7 @@ export {
   shouldShowSearchPickerResults,
 } from "./search-picker-model.js";
 export { renderCollectionSurface } from "./collection-surface-ui.js";
+export { renderRankedCollectionSurface } from "./ranked-collection-ui.js";
 export { renderSearchPickerSurface } from "./search-picker-ui.js";
 export {
   createSceneTabController,

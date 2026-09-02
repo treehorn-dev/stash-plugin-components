@@ -10,6 +10,8 @@ const sources = [
   path.join(repoRoot, "src", "search-picker-model.js"),
   path.join(repoRoot, "src", "mode-renderer.js"),
   path.join(repoRoot, "src", "collection-surface-ui.js"),
+  path.join(repoRoot, "src", "ranked-collection-model.js"),
+  path.join(repoRoot, "src", "ranked-collection-ui.js"),
   path.join(repoRoot, "src", "scene-tab-model.js"),
   path.join(repoRoot, "src", "selection-surface-model.js"),
   path.join(repoRoot, "src", "related-entity-list-ui.js"),
@@ -25,6 +27,9 @@ const exportedNames = [
   "createSearchPickerState",
   "getDefaultDisplayModes",
   "renderCollectionSurface",
+  "filterRankedItems",
+  "paginateRankedItems",
+  "renderRankedCollectionSurface",
   "clampSelectedIds",
   "clearSelectedIds",
   "getDisplayMode",
@@ -41,6 +46,7 @@ const exportedNames = [
   "renderSelectableTable",
   "renderSelectionToolbar",
   "resolveModeRenderer",
+  "resolveRankedItems",
   "resolveSearchPickerResults",
   "selectAllIds",
   "selectPickerRecord",
@@ -52,7 +58,7 @@ const exportedNames = [
 
 function stripModuleSyntax(source) {
   return source
-    .replace(/^import\s.+?;\n/gm, "")
+    .replace(/^import\s+[\s\S]*?\s+from\s+["'][^"']+["'];\n/gm, "")
     .replace(/^export function /gm, "function ")
     .replace(/^export \{.+?\};?\n/gm, "");
 }

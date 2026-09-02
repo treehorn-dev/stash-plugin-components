@@ -181,6 +181,10 @@ Collection and renderer seam:
 - `renderCollectionSurface`
 - `renderModeSurfaceItem`
 - `resolveModeRenderer`
+- `resolveRankedItems`
+- `filterRankedItems`
+- `paginateRankedItems`
+- `renderRankedCollectionSurface`
 
 Other UI helpers:
 - `createSceneTabController`
@@ -204,3 +208,41 @@ It includes:
 The classes are intentionally plain and override-friendly so downstream plugins
 can tighten layout or match a richer entity-specific look without forking the
 behavior layer.
+
+## Ranked Collections
+
+Use a ranked collection when a remote service owns candidate scoring but the
+plugin owns local entity hydration. Supply the remote ranking as `{ key, score
+}` entries, hydrate local entities with one Stash `findScenes(scene_ids: ... )`
+query, and render the resolved records with an entity presentation:
+
+```js
+const presentation = createEntityPresentation({
+  adapter: {
+    entityType: "scene",
+    keyOf: (record) => record.item.id,
+    titleOf: (record) => record.item.title,
+    imageOf: (record) => record.item.paths?.screenshot,
+    metaOf: (record) => record.entry.reasons,
+  },
+});
+
+renderRankedCollectionSurface(runtime, {
+  title: "For You",
+  ranked: recommendations.map((item) => ({
+    key: item.localSceneId,
+    score: item.score,
+    reasons: item.reasons,
+  })),
+  items: hydratedScenes,
+  keyOf: (scene) => scene.id,
+  presentation,
+});
+```
+
+The library deliberately does not mirror Stash's internal scene-filter
+sidebar: Stash does not expose it to plugins as a reusable primitive. A
+consumer can apply caller-owned filter state before rendering with
+`filterRecord`; when it needs server-side filtering, it should send the same
+`SceneFilterType` to its own `findScenes` query and then resolve that filtered
+result against the external ranking.

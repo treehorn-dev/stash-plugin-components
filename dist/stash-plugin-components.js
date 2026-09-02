@@ -338,6 +338,67 @@ function renderCollectionSurface(runtime, props) {
 }
 
 
+function resolveRankedItems(ranked, items, keyOf) {
+  if (typeof keyOf !== "function") {
+    throw new TypeError("resolveRankedItems requires keyOf");
+  }
+
+  const itemByKey = new Map(
+    (Array.isArray(items) ? items : []).map((item) => [String(keyOf(item)), item])
+  );
+
+  return (Array.isArray(ranked) ? ranked : [])
+    .map((entry, index) => ({
+      entry,
+      index,
+      item: itemByKey.get(String(entry?.key ?? "")),
+      score: Number(entry?.score ?? 0),
+    }))
+    .filter(({ item }) => item !== undefined)
+    .sort((left, right) => right.score - left.score || left.index - right.index)
+    .map(({ entry, item, score }) => ({ entry, item, score }));
+}
+
+function filterRankedItems(items, predicate) {
+  if (typeof predicate !== "function") {
+    return [...(Array.isArray(items) ? items : [])];
+  }
+
+  return (Array.isArray(items) ? items : []).filter(predicate);
+}
+
+function paginateRankedItems(items, options = {}) {
+  const source = Array.isArray(items) ? items : [];
+  const pageSize = Math.max(1, Number(options.pageSize ?? source.length) || 1);
+  const page = Math.max(1, Number(options.page ?? 1) || 1);
+  const start = (page - 1) * pageSize;
+
+  return {
+    items: source.slice(start, start + pageSize),
+    page,
+    pageSize,
+    total: source.length,
+  };
+}
+
+
+
+function renderRankedCollectionSurface(runtime, props = {}) {
+  const resolved = resolveRankedItems(props.ranked, props.items, props.keyOf);
+  const filtered = filterRankedItems(resolved, props.filterRecord);
+  const page = paginateRankedItems(filtered, props.pagination);
+
+  return renderCollectionSurface(runtime, {
+    ...props,
+    items: page.items,
+    renderItemContext: {
+      ...(props.renderItemContext ?? {}),
+      totalRankedItems: page.total,
+    },
+  });
+}
+
+
 function cloneValue(value) {
   if (Array.isArray(value)) {
     return value.map((entry) => cloneValue(entry));
@@ -968,6 +1029,9 @@ function renderSelectableTable(runtime, props) {
     createSearchPickerState,
     getDefaultDisplayModes,
     renderCollectionSurface,
+    filterRankedItems,
+    paginateRankedItems,
+    renderRankedCollectionSurface,
     clampSelectedIds,
     clearSelectedIds,
     getDisplayMode,
@@ -984,6 +1048,7 @@ function renderSelectableTable(runtime, props) {
     renderSelectableTable,
     renderSelectionToolbar,
     resolveModeRenderer,
+    resolveRankedItems,
     resolveSearchPickerResults,
     selectAllIds,
     selectPickerRecord,

@@ -41,7 +41,7 @@
 
 **Step 2:** Run `node --test test/ranked-collection-ui.test.js` and confirm failure because the surface does not exist.
 
-**Step 3:** Implement `renderRankedCollectionSurface(runtime, props)`: resolve ranked items, optionally filter and paginate, then delegate to `renderCollectionSurface`.
+**Step 3:** Implement `renderRankedCollectionSurface(runtime, props)`: resolve ranked items, optionally filter and paginate, then delegate to `renderCollectionSurface`. The presentation receives ranked records of shape `{ entry, item, score }`.
 
 **Step 4:** Run the focused test and confirm it passes.
 
