@@ -13,11 +13,13 @@ export function renderEntityCard(runtime, props = {}) {
   }
 
   const attributes = Array.isArray(props.attributes) ? props.attributes.filter(Boolean) : [];
+  const countRailItems = Array.isArray(props.countRail) ? props.countRail.filter(Boolean) : [];
   const thumbnail = props.thumbnail;
   const rootProps = {
     className: [
       "stash-composables-entity-card",
       props.badgeRail ? "stash-composables-entity-card--with-badge-rail" : "",
+      countRailItems.length ? "stash-composables-entity-card--with-count-rail" : "",
       props.className,
     ].filter(Boolean).join(" "),
     ...(Object.keys(styleVariables(props.style)).length ? { style: styleVariables(props.style) } : {}),
@@ -70,6 +72,32 @@ export function renderEntityCard(runtime, props = {}) {
         )
       : null
   );
+  const countRail = countRailItems.length
+    ? React.createElement(
+        "div",
+        { className: "stash-composables-entity-card__count-rail" },
+        ...countRailItems.map((item, index) => React.createElement(
+          "div",
+          { className: "stash-composables-entity-card__count-entry", key: item.key ?? index },
+          React.createElement(
+            "button",
+            {
+              "aria-label": item.label ?? "",
+              className: "stash-composables-entity-card__count-trigger",
+              title: item.label ?? "",
+              type: "button",
+            },
+            item.icon,
+            item.count
+          ),
+          React.createElement(
+            "div",
+            { className: "stash-composables-entity-card__count-popover" },
+            item.content
+          )
+        ))
+      )
+    : null;
   const footer = props.footer || props.actions
     ? React.createElement(
         "div",
@@ -83,5 +111,5 @@ export function renderEntityCard(runtime, props = {}) {
       )
     : null;
 
-  return React.createElement("article", rootProps, ...[badgeRail, header, media, body, footer].filter(Boolean));
+  return React.createElement("article", rootProps, ...[badgeRail, header, media, body, countRail, footer].filter(Boolean));
 }

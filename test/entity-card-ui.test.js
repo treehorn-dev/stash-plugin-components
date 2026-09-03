@@ -80,3 +80,29 @@ test("renderEntityCard positions a caller-provided badge rail", () => {
   assert.equal(card.children[0].props.className, "stash-composables-entity-card__badge-rail");
   assert.equal(card.children[0].children[0], rail);
 });
+
+test("renderEntityCard renders hoverable count entries with caller-provided popover content", () => {
+  const React = createFakeReact();
+  const icon = React.createElement("span", { "aria-hidden": true }, "P");
+  const popover = React.createElement("a", { href: "/performers/1" }, "Performer");
+
+  const card = renderEntityCard(
+    { React },
+    {
+      countRail: [{ content: popover, count: "3", icon, key: "performers", label: "3 performers" }],
+      title: "Scene",
+    }
+  );
+
+  assert.equal(card.children.length, 2);
+  assert.equal(card.children[0].props.className, "stash-composables-entity-card__body");
+  assert.equal(card.children[1].props.className, "stash-composables-entity-card__count-rail");
+  const entry = card.children[1].children[0];
+  assert.equal(entry.props.className, "stash-composables-entity-card__count-entry");
+  assert.equal(entry.children[0].type, "button");
+  assert.equal(entry.children[0].props.title, "3 performers");
+  assert.equal(entry.children[0].children[0], icon);
+  assert.equal(entry.children[0].children[1], "3");
+  assert.equal(entry.children[1].props.className, "stash-composables-entity-card__count-popover");
+  assert.equal(entry.children[1].children[0], popover);
+});
