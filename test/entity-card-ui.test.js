@@ -48,7 +48,8 @@ test("renderEntityCard renders caller-provided presentation data and slots", () 
   const [header, media, body, footer] = card.children;
   assert.equal(header.props.className, "stash-composables-entity-card__header");
   assert.equal(media.children[0].props.src, "/scene/1/screenshot");
-  assert.equal(media.children[1], overlay);
+  assert.equal(media.children[1].props.className, "stash-composables-entity-card__media-overlay");
+  assert.equal(media.children[1].children[0], overlay);
   assert.equal(body.children[0].children[0].children[0], "Scene title");
   assert.equal(body.children[1].children[0], "Caller-owned description");
   assert.equal(body.children[2].children[0].children[0].children[0], "Performers");
@@ -125,4 +126,38 @@ test("renderEntityCard can hide zero-count entries when requested", () => {
   assert.equal(countRail.props.className, "stash-composables-entity-card__count-rail");
   assert.equal(countRail.children.length, 1);
   assert.equal(countRail.children[0].props.key, "performers");
+});
+
+test("renderEntityCard renders a linked hover-preview poster with a below-poster rail", () => {
+  const React = createFakeReact();
+  const overlay = React.createElement("span", { className: "caller-overlay" }, "12:34");
+  const mediaRail = React.createElement("img", { alt: "Motion heatmap", src: "/scene/1/heatmap" });
+  const card = renderEntityCard(
+    { React },
+    {
+      mediaRail,
+      thumbnail: {
+        alt: "Scene poster",
+        href: "/scenes/1",
+        overlay,
+        previewSrc: "/scene/1/preview",
+        src: "/scene/1/screenshot",
+      },
+      title: "Scene",
+    }
+  );
+
+  const [media, rail, body] = card.children;
+  const posterLink = media.children[0];
+  assert.equal(posterLink.type, "a");
+  assert.equal(posterLink.props.href, "/scenes/1");
+  assert.equal(posterLink.children[0].props.src, "/scene/1/screenshot");
+  assert.equal(posterLink.children[1].type, "video");
+  assert.equal(posterLink.children[1].props.autoPlay, true);
+  assert.equal(posterLink.children[1].props.src, "/scene/1/preview");
+  assert.equal(media.children[1].props.className, "stash-composables-entity-card__media-overlay");
+  assert.equal(media.children[1].children[0], overlay);
+  assert.equal(rail.props.className, "stash-composables-entity-card__media-rail");
+  assert.equal(rail.children[0], mediaRail);
+  assert.equal(body.props.className, "stash-composables-entity-card__body");
 });
