@@ -106,3 +106,23 @@ test("renderEntityCard renders hoverable count entries with caller-provided popo
   assert.equal(entry.children[1].props.className, "stash-composables-entity-card__count-popover");
   assert.equal(entry.children[1].children[0], popover);
 });
+
+test("renderEntityCard can hide zero-count entries when requested", () => {
+  const React = createFakeReact();
+  const card = renderEntityCard(
+    { React },
+    {
+      countRail: [
+        { content: "No tags", count: 0, key: "tags", label: "0 tags" },
+        { content: "Performer", count: 1, key: "performers", label: "1 performer" },
+      ],
+      showZeroCounts: false,
+      title: "Scene",
+    }
+  );
+
+  const countRail = card.children[1];
+  assert.equal(countRail.props.className, "stash-composables-entity-card__count-rail");
+  assert.equal(countRail.children.length, 1);
+  assert.equal(countRail.children[0].props.key, "performers");
+});
