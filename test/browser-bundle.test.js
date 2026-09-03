@@ -51,4 +51,12 @@ test("build-browser-bundle emits a browser asset exposing window.StashPluginComp
 
   const cssSource = fs.readFileSync(cssDistPath, "utf8");
   assert.match(cssSource, /stash-composables-selection-toolbar/);
+  assert.match(
+    cssSource,
+    /\.stash-composables-entity-card__media-rail > img\s*\{[^}]*height:\s*auto[^}]*max-width:\s*100%[^}]*width:\s*100%/s
+  );
+  assert.doesNotMatch(
+    cssSource,
+    /\.stash-composables-entity-card__media-rail > img\s*\{[^}]*height:\s*0\.65rem/s
+  );
 });
