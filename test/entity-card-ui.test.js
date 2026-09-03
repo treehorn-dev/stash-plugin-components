@@ -65,3 +65,18 @@ test("renderEntityCard omits empty sections", () => {
   assert.equal(card.children.length, 1);
   assert.equal(card.children[0].props.className, "stash-composables-entity-card__body");
 });
+
+test("renderEntityCard positions a caller-provided badge rail", () => {
+  const React = createFakeReact();
+  const rail = React.createElement(
+    "div",
+    { className: "caller-badge-rail" },
+    React.createElement("span", null, "4.5"),
+    React.createElement("span", null, "New")
+  );
+
+  const card = renderEntityCard({ React }, { badgeRail: rail, title: "Scene" });
+
+  assert.equal(card.children[0].props.className, "stash-composables-entity-card__badge-rail");
+  assert.equal(card.children[0].children[0], rail);
+});
