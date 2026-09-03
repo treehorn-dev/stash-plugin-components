@@ -284,6 +284,7 @@ function renderCollectionSurface(runtime, props) {
   const { React, Spinner } = runtime;
   const items = Array.isArray(props.items) ? props.items : [];
   const displayMode = props.displayMode ?? "grid";
+  const Heading = props.headingElement ?? "h1";
 
   return React.createElement(
     "div",
@@ -294,7 +295,7 @@ function renderCollectionSurface(runtime, props) {
       React.createElement(
         "div",
         { className: "stash-composables-collection__meta" },
-        React.createElement("h1", null, props.title),
+        React.createElement(Heading, null, props.title),
         props.description ? React.createElement("div", null, props.description) : null
       ),
       props.renderActions ? props.renderActions() : null

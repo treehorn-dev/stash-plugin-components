@@ -208,3 +208,13 @@ test("renderCollectionSurface can delegate rendering through a presentation and 
     "stash-composables-mode-card stash-composables-mode-card--list"
   );
 });
+
+test("renderCollectionSurface allows callers to choose the collection heading element", () => {
+  const React = createFakeReact();
+  const element = renderCollectionSurface(
+    { React, Spinner: "spinner" },
+    { title: "Related scenes", headingElement: "h3", items: ["scene"] }
+  );
+
+  assert.equal(element.children[0].children[0].children[0].type, "h3");
+});
