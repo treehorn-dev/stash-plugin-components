@@ -44,6 +44,10 @@ test("build-browser-bundle emits a browser asset exposing window.StashPluginComp
     typeof sandbox.window.StashPluginComponents.renderRankedCollectionSurface,
     "function"
   );
+  assert.equal(
+    typeof sandbox.window.StashPluginComponents.renderEntityCard,
+    "function"
+  );
 
   const cssSource = fs.readFileSync(cssDistPath, "utf8");
   assert.match(cssSource, /stash-composables-selection-toolbar/);
