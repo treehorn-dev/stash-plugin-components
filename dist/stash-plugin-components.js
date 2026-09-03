@@ -389,6 +389,7 @@ function renderEntityCard(runtime, props = {}) {
         const preview = thumbnail.previewSrc
           ? React.createElement("video", {
               "aria-hidden": true,
+              autoPlay: true,
               className: "stash-composables-entity-card__preview",
               loop: true,
               muted: true,

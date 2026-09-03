@@ -153,6 +153,7 @@ test("renderEntityCard renders a linked hover-preview poster with a below-poster
   assert.equal(posterLink.props.href, "/scenes/1");
   assert.equal(posterLink.children[0].props.src, "/scene/1/screenshot");
   assert.equal(posterLink.children[1].type, "video");
+  assert.equal(posterLink.children[1].props.autoPlay, true);
   assert.equal(posterLink.children[1].props.src, "/scene/1/preview");
   assert.equal(media.children[1].props.className, "stash-composables-entity-card__media-overlay");
   assert.equal(media.children[1].children[0], overlay);
