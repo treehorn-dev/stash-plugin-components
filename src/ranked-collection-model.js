@@ -27,16 +27,33 @@ export function filterRankedItems(items, predicate) {
   return (Array.isArray(items) ? items : []).filter(predicate);
 }
 
+export function sortRankedItems(items, comparator) {
+  const source = Array.isArray(items) ? items : [];
+  if (typeof comparator !== "function") {
+    return [...source];
+  }
+
+  return source
+    .map((item, index) => ({ item, index }))
+    .sort((left, right) => Number(comparator(left.item, right.item)) || left.index - right.index)
+    .map(({ item }) => item);
+}
+
 export function paginateRankedItems(items, options = {}) {
   const source = Array.isArray(items) ? items : [];
   const pageSize = Math.max(1, Number(options.pageSize ?? source.length) || 1);
-  const page = Math.max(1, Number(options.page ?? 1) || 1);
+  const pageCount = Math.max(1, Math.ceil(source.length / pageSize));
+  const page = Math.min(pageCount, Math.max(1, Number(options.page ?? 1) || 1));
   const start = (page - 1) * pageSize;
+  const itemsOnPage = source.slice(start, start + pageSize);
 
   return {
-    items: source.slice(start, start + pageSize),
+    end: source.length ? start + itemsOnPage.length : 0,
+    items: itemsOnPage,
     page,
+    pageCount,
     pageSize,
+    start: source.length ? start + 1 : 0,
     total: source.length,
   };
 }

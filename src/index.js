@@ -38,6 +38,7 @@ export {
   filterRankedItems,
   paginateRankedItems,
   resolveRankedItems,
+  sortRankedItems,
 } from "./ranked-collection-model.js";
 export {
   renderSelectableGrid,
