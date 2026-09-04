@@ -1,0 +1,460 @@
+.stash-composables-selection-toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.stash-composables-selection-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.stash-composables-selection-card {
+  background: var(--card-bg, #1d2124);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.4rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  position: relative;
+}
+
+.stash-composables-selection-card.is-selected,
+.stash-composables-selection-table tr.is-selected {
+  border-color: rgba(13, 110, 253, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(13, 110, 253, 0.35);
+}
+
+.stash-composables-selection-card__select {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+.stash-composables-selection-card__body {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.stash-composables-selection-empty {
+  color: var(--muted, #adb5bd);
+  padding: 1rem 0;
+}
+
+.stash-composables-selection-table td,
+.stash-composables-selection-table th {
+  vertical-align: middle;
+}
+
+.stash-composables-related-entity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stash-composables-related-entity-list__row {
+  align-items: center;
+  border: 1px solid var(--bs-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.5rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+.stash-composables-related-entity-list__body {
+  min-width: 0;
+}
+
+.stash-composables-related-entity-list__title {
+  font-weight: 600;
+}
+
+.stash-composables-related-entity-list__meta,
+.stash-composables-related-entity-list__empty {
+  color: var(--bs-secondary-color, rgba(255, 255, 255, 0.7));
+}
+
+.stash-composables-related-entity-list__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stash-composables-search-picker {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stash-composables-search-picker__input {
+  align-items: center;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+.stash-composables-search-picker__results {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.stash-composables-search-picker__result {
+  align-items: center;
+  background: var(--card-bg, #1d2124);
+  border: 1px solid var(--bs-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.5rem;
+  color: inherit;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.stash-composables-search-picker__result-main {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.stash-composables-search-picker__thumb {
+  border-radius: 0.35rem;
+  height: 3rem;
+  object-fit: cover;
+  width: 3rem;
+}
+
+.stash-composables-search-picker__meta,
+.stash-composables-search-picker__empty {
+  color: var(--bs-secondary-color, rgba(255, 255, 255, 0.7));
+}
+
+.stash-composables-collection {
+  display: grid;
+  gap: 1rem;
+}
+
+.stash-composables-collection__header {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.stash-composables-collection__meta {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.stash-composables-collection__items {
+  display: grid;
+  gap: 1rem;
+}
+
+.stash-composables-collection__empty {
+  color: var(--bs-secondary-color, rgba(255, 255, 255, 0.7));
+}
+
+.stash-composables-entity-card {
+  background: var(--stash-composables-entity-card-background, var(--card-bg, #1d2124));
+  border: 1px solid var(--stash-composables-entity-card-border, var(--bs-border-color, rgba(255, 255, 255, 0.15)));
+  border-radius: 0.5rem;
+  color: var(--stash-composables-entity-card-text, inherit);
+  display: grid;
+  gap: 0.75rem;
+  overflow: hidden;
+  padding: 0.75rem;
+  position: relative;
+  text-decoration: none;
+}
+
+.stash-composables-entity-card--with-badge-rail {
+  padding-left: 3.25rem;
+}
+
+.stash-composables-entity-card--with-count-rail {
+  overflow: visible;
+}
+
+.stash-composables-entity-card__badge-rail {
+  align-items: stretch;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  justify-content: flex-start;
+  left: 0;
+  padding: 0.5rem 0.25rem;
+  position: absolute;
+  top: 0;
+  width: 3rem;
+  z-index: 1;
+}
+
+.stash-composables-entity-card:hover {
+  color: var(--stash-composables-entity-card-text, inherit);
+  text-decoration: none;
+}
+
+.stash-composables-entity-card__header,
+.stash-composables-entity-card__footer,
+.stash-composables-entity-card__attribute {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.stash-composables-entity-card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+}
+
+.stash-composables-entity-card__media-link,
+.stash-composables-entity-card__media-visual {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.stash-composables-entity-card__media-link:focus-visible {
+  outline: 2px solid var(--bs-primary, #0d6efd);
+  outline-offset: -2px;
+}
+
+.stash-composables-entity-card__thumbnail {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.stash-composables-entity-card__preview {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 120ms ease-out;
+  width: 100%;
+}
+
+.stash-composables-entity-card__media-link:hover .stash-composables-entity-card__preview,
+.stash-composables-entity-card__media-link:focus-visible .stash-composables-entity-card__preview {
+  opacity: 1;
+}
+
+.stash-composables-entity-card__media-overlay {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.stash-composables-entity-card__media-overlay a,
+.stash-composables-entity-card__media-overlay button {
+  pointer-events: auto;
+}
+
+.stash-composables-entity-card__media-rail {
+  line-height: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.stash-composables-entity-card__media-rail > img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.stash-composables-entity-card__body {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.stash-composables-entity-card__title {
+  font-weight: 600;
+}
+
+.stash-composables-entity-card__description,
+.stash-composables-entity-card__attributes {
+  color: var(--bs-secondary-color, rgba(255, 255, 255, 0.7));
+  font-size: 0.875rem;
+}
+
+.stash-composables-entity-card__attributes {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.stash-composables-entity-card__attribute dt,
+.stash-composables-entity-card__attribute dd {
+  margin: 0;
+}
+
+.stash-composables-entity-card__attribute dt {
+  color: inherit;
+  font-weight: 600;
+}
+
+.stash-composables-entity-card__footer {
+  border-top: 1px solid var(--bs-border-color, rgba(255, 255, 255, 0.15));
+  padding-top: 0.5rem;
+}
+
+.stash-composables-entity-card__count-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.stash-composables-entity-card__count-entry {
+  position: relative;
+}
+
+.stash-composables-entity-card__count-trigger {
+  align-items: center;
+  background: var(--bs-secondary-bg, rgba(255, 255, 255, 0.1));
+  border: 0;
+  border-radius: 0.25rem;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: 0.3rem;
+  min-height: 1.75rem;
+  padding: 0.2rem 0.45rem;
+}
+
+.stash-composables-entity-card__count-trigger:hover,
+.stash-composables-entity-card__count-trigger:focus-visible {
+  background: var(--bs-primary, #0d6efd);
+  color: #fff;
+  outline: none;
+}
+
+.stash-composables-entity-card__count-popover {
+  background: var(--bs-body-bg, #111);
+  border: 1px solid var(--bs-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.3rem;
+  bottom: calc(100% + 0.35rem);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  color: inherit;
+  min-width: max-content;
+  opacity: 0;
+  padding: 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 120ms ease-out, visibility 120ms ease-out;
+  visibility: hidden;
+  z-index: 3;
+}
+
+.stash-composables-entity-card__count-entry:hover .stash-composables-entity-card__count-popover,
+.stash-composables-entity-card__count-entry:focus-within .stash-composables-entity-card__count-popover {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.stash-composables-entity-card__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stash-composables-ranked-actions,
+.stash-composables-ranked-controls,
+.stash-composables-ranked-controls__paging {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.stash-composables-ranked-actions {
+  justify-content: flex-end;
+}
+
+.stash-composables-ranked-controls select,
+.stash-composables-ranked-controls button {
+  background: var(--bs-body-bg, #111);
+  border: 1px solid var(--bs-border-color, rgba(255, 255, 255, 0.2));
+  border-radius: 0.3rem;
+  color: inherit;
+  min-height: 2rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.stash-composables-ranked-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stash-composables-mode-card {
+  background: var(--card-bg, #1d2124);
+  border: 1px solid var(--bs-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.5rem;
+  color: inherit;
+  display: grid;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+
+.stash-composables-mode-card--grid,
+.stash-composables-mode-card--wall {
+  padding: 0.75rem;
+}
+
+.stash-composables-mode-card--list {
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 0.75rem 1rem;
+}
+
+.stash-composables-mode-card__image {
+  aspect-ratio: 16 / 9;
+  border-radius: 0.35rem;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.stash-composables-mode-card--list .stash-composables-mode-card__image {
+  aspect-ratio: 16 / 9;
+  width: 8rem;
+}
+
+.stash-composables-mode-card__body {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.stash-composables-mode-card__title {
+  font-weight: 600;
+}
+
+.stash-composables-mode-card__meta {
+  color: var(--bs-secondary-color, rgba(255, 255, 255, 0.7));
+  display: grid;
+  gap: 0.2rem;
+}
+
+.stash-composables-mode-card__stats,
+.stash-composables-mode-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.stash-composables-mode-card__stat,
+.stash-composables-mode-card__badge {
+  color: var(--bs-secondary-color, rgba(255, 255, 255, 0.7));
+  font-size: 0.9rem;
+}
