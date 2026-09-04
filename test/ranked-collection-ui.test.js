@@ -97,3 +97,61 @@ test("renderRankedCollectionSurface renders sort and pagination controls", () =>
   controls.children[2].props.onChange({ target: { value: "4" } });
   assert.deepEqual(changes, [["sort", "title"], ["page", 2], ["pageSize", 4]]);
 });
+
+test("renderRankedCollectionSurface renders caller-owned numeric filters", () => {
+  const React = createFakeReact();
+  const changes = [];
+  const element = renderRankedCollectionSurface(
+    { React, Spinner: "spinner" },
+    {
+      items: [{ id: "scene-a", title: "A" }],
+      keyOf: (scene) => scene.id,
+      ranked: [{ key: "scene-a", score: 1 }],
+      filters: {
+        fields: [
+          { key: "rating", label: "Rating", value: { operator: "gte", value: 4 } },
+          { key: "o_count", label: "O Count", value: { operator: "not_null" } },
+        ],
+        onChange: (key, value) => changes.push([key, value]),
+      },
+    }
+  );
+
+  const controls = element.children[0].children[1].children[0];
+  assert.equal(controls.props.className, "stash-composables-ranked-controls");
+  assert.equal(controls.children[0].props.className, "stash-composables-ranked-controls__filters");
+  assert.equal(controls.children[0].children[0].children[1].props.value, "gte");
+  assert.equal(controls.children[0].children[0].children[2].props.value, "4");
+  assert.equal(controls.children[0].children[1].children.length, 2);
+  controls.children[0].children[0].children[1].props.onChange({ target: { value: "lt" } });
+  assert.deepEqual(changes, [["rating", { operator: "lt", value: 4 }]]);
+});
+
+test("renderRankedCollectionSurface lets numeric fields define their available operators", () => {
+  const React = createFakeReact();
+  const element = renderRankedCollectionSurface(
+    { React, Spinner: "spinner" },
+    {
+      items: [{ id: "scene-a", title: "A" }],
+      keyOf: (scene) => scene.id,
+      ranked: [{ key: "scene-a", score: 1 }],
+      filters: {
+        fields: [
+          {
+            key: "rating",
+            label: "Rating",
+            operators: ["gte", "lte", "is_null"],
+            value: { operator: "gte", value: 4 },
+          },
+        ],
+      },
+    }
+  );
+
+  const operatorSelect = element.children[0].children[1].children[0]
+    .children[0].children[0].children[1];
+  assert.deepEqual(
+    operatorSelect.children.map((option) => option.props.value),
+    ["gte", "lte", "is_null"]
+  );
+});
